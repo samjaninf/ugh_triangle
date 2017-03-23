@@ -1,0 +1,61 @@
+<?php if(count($posts)): ?>
+    <section id="cd-timeline" class="cd-container">
+        <?php foreach($posts as $post): ?>
+            <div class="cd-timeline-block">
+                <div class="cd-timeline-img cd-success">
+                    <i class="<?php echo $post->profile->getIcon(); ?>"></i>
+                </div> <!-- cd-timeline-img -->
+
+                <div class="cd-timeline-content">
+                    <h3><?php echo $post->profile->name; ?> </h3>
+                    <?php echo $post->published ? "<i class='fa fa-check'></i>Posted at": "<i class='fa fa-paper-plane'></i> Scheduled for"; ?>
+
+                    <p><?php echo $post->content; ?></p>
+                    <span class="cd-date"><?php echo date("Y-m-d H:i:s", $post->time); ?></span>
+                    <?php if($post->profile->hasComments() && $post->published): ?>
+                        <div class="comments" p-id="<?php echo $post->id; ?>"></div>
+
+                    <?php endif; ?>
+                    <hr>
+                    <?php if($post->profile->isFacebook() && $post->published): ?>
+                        <span style="cursor: default" class="btn btn-success btn-xs">
+                            <strong><i class="fa fa-thumbs-up"></i> <?php echo $post->getApiData("likes",null); ?></strong>
+                        </span>
+                    <?php endif; ?>
+                    <a href="javascript:;" ajax="ajax" data-parent-lever-hide="2"
+                       data-success="Публикацията е изтрита успешно"
+                       data-href="<?php echo route('post.delete',$post->id); ?>" class="btn btn-danger btn-sm pull-right"><i
+                                class="fa fa-trash-o"></i> <?php echo tr("delete"); ?></a>
+                </div> <!-- cd-timeline-content -->
+            </div> <!-- cd-timeline-block -->
+        <?php endforeach; ?>
+
+        <?php echo $posts->render(); ?>
+
+    </section> <!-- cd-timeline -->
+<?php else: ?>
+    <h4 align="center"><i class="fa fa-search"></i> <?php echo tr('no_posts_found'); ?></h4>
+<?php endif; ?>
+<script>
+    $("a[ajax=ajax]").click(function () {
+        var success_message = $(this).attr("data-success");
+        var el = $(this);
+        $(this).addClass('disabled');
+        $(this).text("<?php echo tr('processing'); ?>...");
+        $.get($(this).attr("data-href"), function () {
+            sweetAlert("Ура", success_message, "success");
+            el.parent().parent().hide();
+        });
+    });
+    function loadComment(postId, element) {
+        element.html("<?php echo tr('loading'); ?>...");
+        $.get('<?php echo url('app/comments/load'); ?>', {id: postId}, function (data) {
+            element.html(data);
+        });
+    }
+    $(".comments").each(function () {
+        loadComment($(this).attr("p-id"), $(this));
+
+    });
+
+</script>

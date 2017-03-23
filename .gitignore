@@ -1,0 +1,7 @@
+/vendor
+/node_modules
+Homestead.yaml
+/public/files
+/public/pics
+Homestead.json
+.env

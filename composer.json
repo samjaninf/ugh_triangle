@@ -1,0 +1,71 @@
+{
+  "name": "laravel/laravel",
+  "description": "The Laravel Framework.",
+  "keywords": [
+    "framework",
+    "laravel"
+  ],
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": ">=5.5.9",
+    "laravel/framework": "5.1.*",
+    "sammyk/laravel-facebook-sdk": "^3.0",
+    "barryvdh/laravel-ide-helper": "^2.1",
+    "kbariotis/feedly-api": "dev-master",
+    "oriceon/oauth-5-laravel": "dev-master",
+    "illuminate/html": "5.*",
+    "intervention/image": "^2.3",
+    "thujohn/twitter": "~2.0",
+    "hpatoio/bitly-api": "~2.0",
+    "happyr/linkedin-api-client": "dev-master",
+    "maatwebsite/excel": "~2.0.0",
+    "dirkgroenen/Pinterest-API-PHP": "^0.1.1",
+    "cosenary/instagram": "^2.3",
+    "barryvdh/laravel-translation-manager": "^0.2.1",
+    "stichoza/google-translate-php": "~3.0",
+    "barryvdh/laravel-debugbar": "^2.2",
+    "cboden/ratchet": "^0.3.4"
+  },
+  "require-dev": {
+    "fzaninotto/faker": "~1.4",
+    "mockery/mockery": "0.9.*",
+    "laravel/cashier": "~5.0",
+    "phpunit/phpunit": "~4.0",
+    "phpspec/phpspec": "~2.1"
+  },
+  "autoload": {
+    "classmap": [
+      "database"
+    ],
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/TestCase.php"
+    ]
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "php artisan clear-compiled",
+      "php artisan optimize"
+    ],
+    "pre-update-cmd": [
+      "php artisan clear-compiled"
+    ],
+    "post-update-cmd": [
+      "php artisan optimize"
+    ],
+    "post-root-package-install": [
+      "php -r \"copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": [
+      "php artisan key:generate"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist"
+  }
+}

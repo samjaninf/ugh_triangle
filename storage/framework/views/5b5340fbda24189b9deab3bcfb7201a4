@@ -1,0 +1,52 @@
+<?php $__env->startSection('title'); ?>
+    <?php echo tr("settings"); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <div class="row">
+        <!-- <div class="col-sm-4 col-sm-offset-2">
+            <?php echo Form::open(['url' => 'app/settings']); ?>
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?php echo tr("settings"); ?></h3>
+                </div>
+                <div class="panel-body" style="height: 150px;">
+                    <strong>Име</strong>
+                    <input type="text" class="form-control" name="name" value="<?php echo \Auth::user()->name; ?>">
+                    <strong>E-mail</strong>
+                    <input type="text" class="form-control" name="email" value="<?php echo \Auth::user()->email; ?>">
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-primary btn-block"><i
+                                class="fa fa-refresh"></i> <?php echo tr("update"); ?></button>
+                </div>
+            </div>
+            <?php echo Form::close(); ?>
+
+        </div> -->
+        <div class="col-sm-4 col-sm-offset-4">
+            <?php echo Form::open(['url' => 'app/change_password']); ?>
+
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?php echo tr("change_your_password"); ?></h3>
+                </div>
+                <div class="panel-body" style="height: 150px;">
+                    <strong><?php echo tr("new_password"); ?></strong>
+                    <input type="password" class="form-control" name="new_password">
+                    <strong><?php echo tr("confirm_new_password"); ?></strong>
+                    <input type="password" class="form-control" name="c_new_password">
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" class="btn btn-success btn-block"><i
+                                class="fa fa-refresh"></i> <?php echo tr("update"); ?></button>
+                </div>
+            </div>
+            <?php echo Form::close(); ?>
+
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

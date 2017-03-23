@@ -1,0 +1,50 @@
+<?php $__env->startSection('title'); ?>
+    Избери Фейсбук Събитие
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="card-box">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Име на събитието</th>
+                        <th class="col-md-2"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($profiles as $profile): ?>
+                        <?php
+                        $fb->setDefaultAccessToken($profile->access_token);
+                        $res = $fb->get('/me/events');
+                        $groups = json_decode($res->getBody(), true);
+                        ?>
+                        <?php foreach($groups["data"] as $group): ?>
+                            <tr>
+                                <td style="vertical-align: middle;"><?php echo $group['name']; ?></td>
+
+                                <td style="vertical-align: middle;">
+                                    <?php echo Form::open(['url' => 'app/connect/fb_event']); ?>
+
+                                    <input type="hidden" name="info[id]" value="<?php echo $group['id']; ?>">
+                                    <input type="hidden" name="info[name]" value="<?php echo $group['name']; ?>">
+                                    <input type="hidden" name="info[access_token]" value="<?php echo $profile->access_token; ?>">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
+                                        Свържи
+                                    </button>
+                                    <?php echo Form::close(); ?>
+
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

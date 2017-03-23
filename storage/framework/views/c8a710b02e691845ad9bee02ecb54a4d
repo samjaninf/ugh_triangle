@@ -1,0 +1,43 @@
+<strong>Коментари</strong>
+<table class="table table-hover table-striped">
+    <tbody>
+    <?php $__empty_1 = true; foreach($comments as $comment): $__empty_1 = false; ?>
+        <tr>
+            <td><strong><?php echo $comment["from"]["name"]; ?></strong> <i
+                        class="fa fa-clock-o"></i> <?php echo date("Y-m-d H:i",strtotime($comment['created_time'])); ?>
+
+                <br><?php echo $comment["message"]; ?>
+
+                <br>
+            </td>
+        </tr>
+    <?php endforeach; if ($__empty_1): ?>
+        <tr>
+            <td>Няма никакви коментари</td>
+        </tr>
+    <?php endif; ?>
+    <tr>
+        <td>
+            <input type="text" class="form-control comment" placeholder="Коментирай..."
+                   p-id="<?php echo $post->post_id; ?>" post-id="<?php echo $post->id; ?>">
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    $(".comment").keyup(function (e) {
+        var element = $(this);
+        if (e.keyCode == 13) {
+            var val = $(".comment").val();
+            $(".comment").val("Изпращане на коментара...");
+            $(".comment").attr("disabled", "disabled");
+            $.get('<?php echo url('app/comment/create'); ?>', {
+                post_id: element.attr("p-id"),
+                comment: val
+            }, function () {
+                $(".comment").val("Презареждане...");
+                sweetAlert("Готово", "Коментара е публикуван успешно", "success");
+                loadComment(element.attr("post-id"), $(".comments[p-id="+element.attr("post-id")+"]"));
+            });
+        }
+    });</script>

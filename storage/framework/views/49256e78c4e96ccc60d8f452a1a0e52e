@@ -1,0 +1,112 @@
+
+
+<?php $__env->startSection('title'); ?>
+    Воден знак
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('css'); ?>
+    <link rel="stylesheet" href="<?php echo url('assets'); ?>/css/jquery.fileupload.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <style>
+        .pos {
+            border-radius: 0px;
+            width: 84px;
+            font-size: 10px;
+        }
+    </style>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <style type="text/css">
+        .watermark {
+            border: 2px dashed #000;
+        }
+
+        img.watermark:hover {
+            cursor: move;
+        }
+    </style>
+    <div class="panel panel-border panel-custom">
+        <div class="panel-heading">
+            <h3 class="panel-title">Воден Знак</h3>
+        </div>
+        <div class="panel-body">
+            <?php echo Form::open(['url' => 'app/watermark/'.$profile->id, 'files' => true, 'id' => 'form']); ?>
+
+            <strong>Кажи картинка</strong>
+            <input type="file" name="file" onchange="$('#form').submit()">
+            <?php echo Form::close(); ?>
+
+
+
+            <?php if(\Request::has('img')): ?>
+                <?php echo Form::open(['url' => 'app/watermark/'.$profile->id.'/update']); ?>
+
+                <input type="hidden" name="img[src]" value="<?php echo \Request::get('url'); ?>">
+                <input type="hidden" id="paddings" name="img[paddings]" value=""/>
+                <input type="hidden" id="w" name="img[width]" value=""/>
+                <input type="hidden" id="widthPerc" name="img[width_perc]" value=""/>
+                <input type="hidden" id="h" name="img[height]" value=""/>
+                <input type="hidden" id="opacity" name="img[opacity]" value=""/>
+                <div style="margin-top: 50px;">
+                    <div class="row">
+                        <div class="col-sm-4" style="margin:30px 0px;">
+                            <strong>Прозрачност</strong>
+                            <div id="slider"></div>
+                        </div>
+                    </div>
+                </div>
+                <img src="<?php echo url('assets/global/img/618182.jpg'); ?>" width="800" height="600" id="watermarked"><br>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Обнови</button>
+                <?php echo Form::close(); ?>
+
+            <?php endif; ?>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('js'); ?>
+
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"
+            integrity="sha256-xI/qyl9vpwWFOXz7+x/9WkG5j/SVnSw21viy8fWwbeE=" crossorigin="anonymous"></script>
+    <script src="<?php echo url('assets'); ?>/js/jquery.iframe-transport.js"></script>
+    <script src="<?php echo url('assets'); ?>/js/jquery.fileupload.js"></script>
+    <script src="<?php echo url('assets'); ?>/js/watermark-move.min.js"></script>
+    <?php if(\Request::has('img')): ?>
+        <script>
+            var paddings = {
+                top: 0,
+                left: 0,
+                bottom: 0,
+                right: 0
+            };
+            function showCoords(c) {
+                paddings.top = c.y;
+                paddings.left = c.x;
+                $('#w').val(c.w);
+                $('#h').val(c.h);
+                $("#widthPerc").val($("#w").val() / 800);
+                $('#opacity').val(c.opacity);
+                $("#paddings").val(JSON.stringify(paddings));
+            }
+            $('#watermarked').Watermarker({
+                watermark_img: '<?php echo \Request::get('url'); ?>',
+                opacitySlider: $("#slider"),
+                opacity: '<?php echo \Request::has('opacity')?\Request::get('opacity')/100:1; ?>',
+                <?php if(\Request::has('x') && \Request::has('y')): ?>
+                x: <?php echo \Request::get('x'); ?>,
+                y: <?php echo \Request::get('y'); ?>,
+                <?php endif; ?>
+                w: '<?php echo \Request::has('width')?\Request::get('width'):80; ?>',
+                h: '<?php echo \Request::has('height')?\Request::get('height'):(80/\Request::get('ratio')); ?>',
+                position: 'topleft',
+                onChange: showCoords
+            });
+        </script>
+    <?php endif; ?>
+    <script>
+
+    </script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

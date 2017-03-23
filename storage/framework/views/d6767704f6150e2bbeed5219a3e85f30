@@ -1,0 +1,6 @@
+<?php echo tr('Hello'); ?>,<br><br>
+
+<?php echo tr(":username_invites_you_to_join_the_:site", ['username' => $user->name, 'site' => site_option("site_title")]); ?>. <br>
+<?php echo tr('if_you_accept_you_will_have_access_to_all_of_his_posts'); ?><br>
+<a href="<?php echo url('sign_up?ref='.\Crypt::encrypt($user->id).'&email='.$email); ?>"><?php echo tr('join'); ?></a>
+<?php echo $__env->make('email.parts.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

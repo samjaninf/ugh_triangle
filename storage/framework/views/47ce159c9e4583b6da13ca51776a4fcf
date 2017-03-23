@@ -1,0 +1,240 @@
+<script>
+    $(".profile").click(function () {
+        if ($(this).attr("state") != "0") {
+            var state = 0;
+        } else {
+            var state = 1;
+        }
+        if (state) {
+            $(this).addClass("enabled");
+            $(this).attr("state", "1");
+            if (parseInt($(this).attr("is-twitter"))) {
+                $(".max-limit").text("140");
+            }
+        } else {
+            $(this).removeClass("enabled");
+            $(this).attr("state", "0");
+        }
+        $.get('<?php echo url('app/turn/profile'); ?>', {id: $(this).attr("p-id"), state: state}, function () {
+        });
+        $("#status").val("");
+        updateLimit();
+    });
+    var box_id = 0;
+    function add_box(type, msg) {
+        box_id++;
+        if (type == "error") {
+            $("#msg_area").html($("#msg_area").html() + '<div class="alert alert-danger" box-id="' + box_id + '"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong><?php echo tr("oops"); ?>!</strong><br> ' + msg);
+        } else {
+            $("#msg_area").html($("#msg_area").html() + '<div class="alert alert-success" box-id="' + box_id + '"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong><?php echo tr("success"); ?>!</strong><br> ' + msg);
+        }
+        var l = $("#msg_area").find('.alert').length;
+        if (l > 2) {
+            $("#msg_area").find('div[box-id!=' + box_id + ']').remove();
+        }
+    }
+    function processing(val) {
+        if (!val) {
+            $(".btn").addClass("disabled");
+            $("#processing").show();
+        } else {
+            $(".btn").removeClass("disabled");
+            $("#processing").hide();
+        }
+    }
+
+    /*
+     Updates #status limits
+     */
+    function updateLimit() {
+        var foundTwitter = 0;
+        $(".profile").each(function () {
+            if ($(this).attr("is-twitter") == "1" && $(this).attr("state") == "1") {
+                foundTwitter = 1;
+            }
+        });
+        if (foundTwitter) {
+            $("#status").attr("maxlength", 140);
+            $(".max-limit").text(140);
+            $(".char-count").text(140);
+        } else {
+            $("#status").attr("maxlength", 1200);
+            $(".max-limit").text(1200);
+            $(".char-count").text(1200);
+        }
+    }
+    ;
+    updateLimit();
+    /*
+     Counts the characters in the #status field
+     */
+    $("#status").keyup(function () {
+        if ($(this).val().trim() != "") {
+            $("#saveText").show();
+        } else {
+            $("#saveText").hide();
+        }
+        var maxLimit = parseInt($(".max-limit").text());
+        var charCount = parseInt($(".char-count").text());
+        $(".char-count").text(maxLimit - $("#status").val().length);
+    });
+
+    function submit_form() {
+        $("#main_form").ajaxSubmit({
+            beforeSubmit: function () {
+                if ($("#status").val().trim().length > 0) {
+                    processing(0);
+                    <?php /*if (!$(".profile[state=1]").length) {*/ ?>
+                            <?php /*processing(1);*/ ?>
+                            <?php /*add_box("error", "<?php echo trans('messages.you_have_no_activated_profiles'); ?>");*/ ?>
+                            <?php /*return false;*/ ?>
+                            <?php /*}*/ ?>
+                    if ($("#type").val() == "photo") {
+                        if (!to_upload.length) {
+                            add_box("error", '<?php echo tr("picture_is_required"); ?>');
+                            processing(1);
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                    if ($("#type").val() == "link") {
+                        var urlregex = /^(https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
+                        var r = urlregex.test($("#link").val());
+                        if (!r) {
+                            add_box("error", '<?php echo tr('invalid_url'); ?>');
+                            processing(1);
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                    return true;
+                } else {
+                    add_box("error", '<?php echo tr("the_status_field_is_required"); ?>');
+                    processing(1);
+                    return false;
+                }
+            },
+            success: function (data) {
+                $('#progress .progress-bar').css(
+                        'width',
+                        '0%'
+                );
+                $('#files').html("");
+                to_upload = [];
+                $("#status").val("");
+                $("input[name=_token]").val(data);
+                processing(1);
+                if (data[0] == 'e') {
+                    sweetAlert("<?php echo tr("oops"); ?>", data[1], "error");
+                } else {
+                    sweetAlert("<?php echo tr("success"); ?>", data[1], "success");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                }
+            }
+        });
+    }
+    $("#share_status").click(function () {
+        $("#type").val("status");
+    });
+    $("#share_photo").click(function () {
+        $("#type").val("photo");
+    });
+    $("#share_link").click(function () {
+        $("#type").val("link");
+    });
+    $("#date").datetimepicker({
+        minDate: '+0',
+        maxDate: '+90',
+        onClose: function () {
+            submit_form();
+        }
+    });
+    $("#schedule").click(function () {
+        $("#submit_type").val("schedule");
+        $("#date").datetimepicker('show');
+    });
+    $("#post_now").click(function () {
+        $("#submit_type").val("now");
+        submit_form();
+    });
+    $("#schedule_in_time").click(function () {
+        $("#submit_type").val("in_time");
+        submit_form();
+    });
+    var to_upload = [];
+    var url = '<?php echo url('app/upload'); ?>';
+    $('#fileupload').fileupload({
+        url: url,
+        dataType: 'json',
+        add: function (e, data) {
+            var goUpload = true;
+            var uploadFile = data.files[0];
+            if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(uploadFile.name)) {
+                add_box('error', '<?php echo tr("the_picture_is_required"); ?>');
+                goUpload = false;
+            }
+            if (uploadFile.size > 2000000) { // 2mb
+                add_box('error', '<?php echo tr("max_filesize_is_2mb"); ?>');
+                goUpload = false;
+            }
+            if (goUpload == true) {
+                data.submit();
+            }
+        },
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                to_upload.push(file.url);
+                $("#fileUrls").val(JSON.stringify(to_upload));
+                console.log(to_upload);
+                $('#files').html($("#files").html() + "<img src='" + file.thumbnailUrl + "'  file-name='" + file.url + "' class='img-thumbnail'/>")
+            });
+            $("#files").on("dblclick", "img", function () {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .progress-bar').css(
+                        'width',
+                        '0%'
+                );
+                $(this).hide();
+                var name = $(this).attr("file-name");
+                var i = to_upload.indexOf(name);
+                if (i != -1) {
+                    to_upload.splice(i, 1);
+                }
+                console.log(to_upload);
+                $.get('<?php echo url('app/upload/delete'); ?>', {name: name});
+            });
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+    $("#translate").click(function () {
+        $(".statusText").text($("#status").val());
+    });
+
+    $("#load_texts_toggle").click(function () {
+        $.get('<?php echo route('drafts.load'); ?>', function (data) {
+            $("#texts_area").html(data);
+        });
+    });
+    $("#saveText").click(function () {
+        $.get('<?php echo route('drafts.save'); ?>', {text: $("#status").val()}, function () {
+            sweetAlert('<?php echo tr('success'); ?>', '<?php echo tr("saved_to_drafts"); ?>', "success");
+        });
+    });
+
+    $(document.body).on("click", ".loadItem", function () {
+        $("#status").val($(this).find('.list-group-item-text').text());
+        $("#load_texts").modal('toggle');
+    });
+</script>

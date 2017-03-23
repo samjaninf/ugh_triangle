@@ -1,0 +1,199 @@
+
+
+<?php $__env->startSection('title'); ?>
+    <?php echo trans('messages.connect_profile'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <h3>Facebook</h3>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-heading bg-primary">
+                    <h3 class="portlet-title">
+                        Facebook Profile
+                    </h3>
+
+                    <div class="portlet-widgets">
+                        <a href="<?php echo route('connect.facebook_profile'); ?>" class="label label-success"><i
+                                    class="fa fa-link"></i> <?php echo tr('connect'); ?></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-primary1" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <?php echo tr('fb_desc'); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-heading bg-primary">
+                    <h3 class="portlet-title">
+                        Facebook Page
+                    </h3>
+
+                    <div class="portlet-widgets">
+                        <a href="<?php echo \Auth::user()->hasFacebookProfile()?route("connect.facebook_page"):route("connect.facebook_profile"); ?>"
+                           class="label label-success"><i
+                                    class="fa fa-link"></i> <?php echo tr('connect'); ?></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-primary1" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <?php echo tr('fb_desc'); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-heading bg-primary">
+                    <h3 class="portlet-title">
+                        Facebook Group
+                    </h3>
+
+                    <div class="portlet-widgets">
+                        <a href="<?php echo \Auth::user()->hasFacebookProfile()?route("connect.facebook_group"):route("connect.facebook_profile"); ?>"
+                           class="label label-success"><i
+                                    class="fa fa-link"></i>
+                            <?php echo tr('connect'); ?></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-primary1" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <?php echo tr('fb_desc'); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-heading bg-primary">
+                    <h3 class="portlet-title">
+                        Facebook Event
+                    </h3>
+
+                    <div class="portlet-widgets">
+                        <a href="<?php echo \Auth::user()->hasFacebookProfile()?route("connect.facebook_event"):route("connect.facebook_profile"); ?>"
+                           class="label label-success"><i
+                                    class="fa fa-link"></i>
+                            <?php echo tr('connect'); ?></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-primary1" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <?php echo tr('fb_desc'); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3>Twitter</h3>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-heading bg-info">
+                    <h3 class="portlet-title">
+                        Twitter Profile
+                    </h3>
+
+                    <div class="portlet-widgets">
+                        <a href="<?php echo route('connect.twitter'); ?>" class="label label-primary"><i
+                                    class="fa fa-link"></i>
+                            <?php echo tr('connect'); ?></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-primary1" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <?php echo tr('twitter_desc'); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h3>LinkedIn</h3>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-heading bg-purple">
+                    <h3 class="portlet-title">
+                        LinkedIn Profile
+                    </h3>
+
+                    <div class="portlet-widgets">
+                        <a href="<?php echo route('connect.linkedin'); ?>" class="label label-primary"><i
+                                    class="fa fa-link"></i>
+                            <?php echo tr('connect'); ?></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-primary1" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <?php echo tr('linkedin_desc'); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="portlet">
+                <div class="portlet-heading bg-purple">
+                    <h3 class="portlet-title">
+                        LinkedIn Page
+                    </h3>
+
+                    <div class="portlet-widgets">
+                        <a href="<?php echo \Auth::user()->hasLinkedInProfile()?route('connect.linkedin_page'):route('connect.linkedin'); ?>"
+                           class="label label-primary"><i
+                                    class="fa fa-link"></i>
+                            <?php echo tr('connect'); ?></a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-primary1" class="panel-collapse collapse in">
+                    <div class="portlet-body">
+                        <?php echo tr('linkedin_desc'); ?>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php /*<h3>Pinterest</h3>*/ ?>
+    <?php /*<div class="row">*/ ?>
+    <?php /*<div class="col-sm-3">*/ ?>
+    <?php /*<div class="portlet">*/ ?>
+    <?php /*<div class="portlet-heading bg-danger">*/ ?>
+    <?php /*<h3 class="portlet-title">*/ ?>
+    <?php /*Pinterest*/ ?>
+    <?php /*</h3>*/ ?>
+
+    <?php /*<div class="portlet-widgets">*/ ?>
+    <?php /*<a href="javascript:;" class="label label-primary"><i*/ ?>
+    <?php /*class="fa fa-link"></i>*/ ?>
+    <?php /*<?php echo tr('connect'); ?></a>*/ ?>
+    <?php /*</div>*/ ?>
+    <?php /*<div class="clearfix"></div>*/ ?>
+    <?php /*</div>*/ ?>
+    <?php /*<div id="bg-primary1" class="panel-collapse collapse in">*/ ?>
+    <?php /*<div class="portlet-body">*/ ?>
+    <?php /*Може да публикуваш снимки.*/ ?>
+    <?php /*</div>*/ ?>
+    <?php /*</div>*/ ?>
+    <?php /*</div>*/ ?>
+    <?php /*</div>*/ ?>
+    <?php /*</div>*/ ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,50 @@
+
+
+<?php $__env->startSection('title'); ?>
+    Избери Фейсбук Страница
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection('content'); ?>
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="card-box">
+                <table class="table table-hover table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Име на страницата</th>
+                        <th class="col-md-2"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $__empty_1 = true; foreach($pages[0]['data'] as $group): $__empty_1 = false; ?>
+                        <tr>
+                            <td style="vertical-align: middle;"><?php echo $group['name']; ?></td>
+
+                            <td style="vertical-align: middle;">
+                                <?php echo Form::open(['url' => 'app/connect/fb_page']); ?>
+
+                                <input type="hidden" name="info[id]" value="<?php echo $group['id']; ?>">
+                                <input type="hidden" name="info[name]" value="<?php echo $group['name']; ?>">
+                                <input type="hidden" name="info[access_token]"
+                                       value="<?php echo $group['access_token']; ?>">
+                                <button type="submit" class="btn btn-success"><i
+                                            class="fa fa-check"></i> Свържи
+                                </button>
+                                <?php echo Form::close(); ?>
+
+                            </td>
+                        </tr>
+                    <?php endforeach; if ($__empty_1): ?>
+                        <tr>
+                            <td colspan="2">Нямаш никакви фейсбук страници свързани към твоят ФБ акаунт</td>
+                        </tr>
+                    <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

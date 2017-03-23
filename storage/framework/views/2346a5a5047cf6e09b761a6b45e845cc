@@ -1,0 +1,49 @@
+
+
+<?php $__env->startSection('title'); ?>
+    Bit.ly
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <?php if(count($profiles)): ?>
+        <h3 align="center"><?php echo tr("your_profiles"); ?></h3>
+    <?php endif; ?>
+    <div class="row" style="margin-bottom: 30px;">
+        <div class="col-sm-4 col-sm-offset-4">
+            <a href="<?php echo url("app/connect/bitly/all"); ?>" class="btn btn-success btn-block"><i
+                        class="fa fa-search"></i> <?php echo tr("connect_all"); ?></a>
+        </div>
+    </div>
+    <?php $__empty_1 = true; foreach($profiles as $profile): $__empty_1 = false; ?>
+        <?php if($profile->getNameType()): ?>
+            <div class="row">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><?php echo $profile->name; ?> [<?php echo $profile->getNameType(); ?>]</h3>
+                        </div>
+                        <div class="panel-body">
+                            <?php if($profile->bitly()->first()!=null): ?>
+                                <p>Bitly Profile: <?php echo $profile->bitly()->first()->bitly_id; ?></p>
+                                <a href="<?php echo url("app/disconnect/bitly/{$profile->id}"); ?>"
+                                   class="btn btn-primary"><?php echo tr("disconnect"); ?></a>
+                            <?php else: ?>
+                                <a href="<?php echo url("app/preconnect/bitly/{$profile->id}"); ?>"
+                                   class="btn btn-primary"><?php echo tr("connect"); ?></a>
+                            <?php endif; ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; if ($__empty_1): ?>
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <h3 align="center"><i
+                            class="fa fa-meh-o"></i> <?php echo tr("you_have_no_connected_profiles_to_your_account"); ?></h3>
+            </div>
+        </div>
+    <?php endif; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

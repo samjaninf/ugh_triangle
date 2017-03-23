@@ -1,0 +1,6 @@
+Здравей,<br><br>
+
+<?php echo $user->name; ?> те кани да се присъединиш към неговият екип в Triangle. <br>
+Ако приемеш поканата ти не ще имаш достъп до всички публикации и социални профили в неговия акаунт. <br>
+<a href="<?php echo url('sign_up?ref='.\Crypt::encrypt($user->id).'&email='.$email); ?>">Пръсиедини се</a>
+<?php echo $__env->make('email.parts.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,12 @@
+
+
+<?php $__env->startSection('title'); ?>
+    <?php echo $notification->title; ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <h3 align="center"><?php echo $notification->title; ?></h3>
+    <p align="center"><?php echo $notification->description; ?></h3>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

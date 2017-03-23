@@ -1,0 +1,123 @@
+
+
+<?php $__env->startSection('title'); ?>
+    <?php echo $profile->name; ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <div class="wraper container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="bg-picture text-center">
+                    <div class="bg-picture-overlay"></div>
+                    <div class="profile-info-name">
+                        <img src="<?php echo $profile->avatar; ?>" class="thumb-lg img-circle img-thumbnail"
+                             alt="profile-image">
+                        <h4 class="m-b-5"><b><?php echo $profile->name; ?></b></h4>
+
+                        <p class="text-muted"><i class="fa fa-bullhorn"></i> <?php echo $profile->getNameType(); ?></p>
+                    </div>
+                </div>
+                <!--/ meta -->
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <!-- Personal-Information -->
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>Редактирай профила</b></h4>
+                    <?php echo Form::open(['route' => ['profile.update', $profile->id]]); ?>
+
+                    <strong>Име</strong>
+                    <input type="text" class="form-control" name="name" value="<?php echo $profile->name; ?>">
+                    <strong>Описание</strong>
+                    <textarea name="description" class="form-control" rows="10"><?php echo $profile->description; ?></textarea>
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a class="btn btn-danger" data-toggle="modal" href="#delete_profile"><i class="fa fa-trash-o"></i> Изтрий</a>
+                            <div class="modal fade" id="delete_profile">
+                            	<div class="modal-dialog">
+                            		<div class="modal-content">
+                            			<div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            				<h4 class="modal-title">Изтриване на профил</h4>
+                            			</div>
+                            			<div class="modal-body">
+                                            Наистина ли искаш да изтриеш този профил?
+                            			</div>
+                            			<div class="modal-footer">
+                                            <a href="#" data-dismiss="modal" class="btn btn-primary">Не</a>
+                                            <a href="<?php echo route('profile.delete', $profile->id); ?>" class="btn btn-danger"><i
+                                                        class="fa fa-trash-o"></i> Да</a>
+                            			</div>
+                            		</div><!-- /.modal-content -->
+                            	</div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+
+                            <button type="submit" class="btn btn-primary pull-right"><i
+                                        class="fa fa-refresh"></i> Обнови</button>
+                        </div>
+                    </div>
+                    <?php echo Form::close(); ?>
+
+                </div>
+                <a href="<?php echo url('app/watermark/'.$profile->id); ?>" class="btn btn-primary">
+                    <i class="fa fa-wrench"></i> Настройки на воден знак
+                </a>
+                <!-- Personal-Information -->
+
+
+                <!-- Personal-Information -->
+
+
+            </div>
+
+
+            <div class="col-md-8">
+
+                <div class="card-box">
+                    <h4 class="m-t-0 header-title"><b>История</b></h4>
+
+                    <div class="p-20">
+                        <div class="timeline-2">
+                            <?php $__empty_1 = true; foreach($posts as $post): $__empty_1 = false; ?>
+                                <div class="time-item">
+                                    <div class="item-info">
+                                        <div class="text-muted"><?php echo \Carbon\Carbon::createFromTimeStamp($post->time)->diffForHumans(); ?></div>
+                                        <p><strong><a href="#"
+                                                      class="text-info"><?php echo $post->getTypeName(); ?></a></strong> <?php echo $post->content; ?>
+
+                                            <?php if($post->getType() == "image"): ?>
+                                                <?php foreach(json_decode($post->images) as $image): ?>
+                                                    <br><span><a href="<?php echo $image; ?>"><?php echo $image; ?></a></span>
+                                        <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <?php endforeach; if ($__empty_1): ?>
+                                <div class="text-center">
+                                    <i class="fa fa-info"></i> Няма никакви история за този профил
+                                </div>
+                            <?php endif; ?>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <div class="row">
+
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app.layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

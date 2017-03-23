@@ -1,0 +1,35 @@
+<?php $__empty_1 = true; foreach($nots as $not): $__empty_1 = false; ?>
+    <a href="<?php echo $not->link; ?>"
+       class="list-group-item notification"
+       is-seen="<?php echo $not->is_read; ?>"
+       not-id="<?php echo $not->id; ?>">
+        <div class="media">
+            <div class="pull-left p-r-10">
+                <em class="fa fa-<?php echo $not->icon; ?> fa-2x text-success"></em>
+            </div>
+            <div class="media-body">
+                <h5 class="media-heading"><?php echo $not->title; ?></h5>
+                <p class="m-0">
+                    <small><?php echo $not->description; ?></small>
+                </p>
+            </div>
+        </div>
+    </a>
+<?php endforeach; if ($__empty_1): ?>
+    <div class="text-center">
+        <p style="color:#777;margin:10px;"><?php echo tr('you_do_not_have_any_nots'); ?></p>
+    </div>
+<?php endif; ?>
+<script>
+    $(".notification").mouseover(function () {
+        var el = $(this);
+        if (el.attr("is-seen") == 0) {
+            el.attr("is-seen", 1);
+            $.get('<?php echo route('app.notification.seen'); ?>', {id: $(this).attr("not-id")}, function () {
+                var text = parseInt($(".nots_count").first().text());
+                if (text > 0) text--;
+                $(".nots_count").text(text);
+            });
+        }
+    });
+</script>

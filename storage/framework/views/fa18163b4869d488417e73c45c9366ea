@@ -1,0 +1,5 @@
+Здравей <?php echo $user->name; ?>,
+<hr>
+Твоята нова парола е: <?php echo $password; ?><br>
+Може да я промениш като влезеш в акаунта си от <a href="<?php echo url('/'); ?>">ТУК</a>.
+<?php echo $__env->make('email.parts.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

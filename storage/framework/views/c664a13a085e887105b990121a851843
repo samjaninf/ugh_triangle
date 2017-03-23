@@ -1,0 +1,6 @@
+<?php foreach($drafts as $draft): ?>
+    <a href="#" class="list-group-item loadItem">
+        <h4 class="list-group-item-heading"><?php echo $draft->created_at; ?> [<i class="fa fa-user"></i> <?php echo $draft->user->name; ?>]</h4>
+        <p class="list-group-item-text"><?php echo substr($draft->text,0,300).(mb_strlen($draft->text,"utf-8")>300?"...":""); ?></p>
+    </a>
+<?php endforeach; ?>

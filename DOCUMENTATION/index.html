@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    <title>Triangle</title>
+
+    <link href="https://bootswatch.com/superhero/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Triangle</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Introduction</a></li>
+            <li><a href="#requirements">Requirements</a></li>
+            <li><a href="#used_techs">Used Technologies</a></li>
+            <li><a href="#cronjob">CronJob Setup</a></li>
+            <li><a href="#guide">Application Guide</a></li>
+            <li><a href="#installation">Installation</a></li>
+            <li><a href="#contact_me">Contact Me</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container" style="margin-top:50px;">
+
+    <div id="intro">
+      <h3>Introduction</h3>
+      <p><strong>First of all THANK YOU for purchasing the script.</strong></p>
+      <p>Triangle is a social network tool that helps you manage and schedule your post in all of your social network profiles.</p>
+      <img src="img/home.PNG" class="img-responsive img-thumbnail">
+      <small># A picture from the home screen</small>
+    </div>
+    <div id="requirements">
+      <h3>Requirements</h3>
+      <p>What do you need in order to install Triangle?</p>
+      <p>Well, Triangle is a Laravel web application so it has the same requirements as the Laravel PHP Framework.</p>
+      <ul>
+      <li>Apache Web Server</li>
+      <li>MySQL Database</li>
+      <li>PHP Version >= 5.5.9s </li>
+      <li>OpenSSL PHP Extensions (Most of the web servers have it)</li>
+      <li>PDO PHP Extensions (Most of the web servers have it)</li>
+      <li>Mbstring PHP Extensions (Most of the web servers have it)</li>
+      <li>Tokenizer PHP Extensions (Most of the web servers have it)</li>
+      </ul>
+      <strong>Make sure you meet all the requirements in order to avoid any troubles when installing.</strong>
+    </div>
+    <div id="used_techs">
+    <h3>Used Technologies</h3>
+      <ul>
+        <li>Laravel PHP Framework</li>
+        <li>Jquery JS Framework</li>
+        <li>Bootstrap CSS Framework</li>
+        <li>Jquery UI</li>
+        <li>Morris Tables</li>
+        <li>Others...</li>
+      </ul>
+    </div>
+    <div id="installation">
+      <h3>Installation</h3>
+      <p>Having an SSH access to your web server will be an advantage.</p>
+      <h3>1. Extract the .zip archive and go to the project root folder</h3>
+      <img src="img/root.PNG" class="img-responsive img-thumbnail">
+      <h3>2. Open the .ENV file using any text editor</h3>
+      <p>You can see 3 sectiopn</p>
+      <img src="img/mailgun.png" class="img-responsive img-thumbnail">
+      <h4>Database</h4>
+      <ul>
+        <li>DB_USERNAME = Name of the mysql user</li>
+        <li>DB_PASSWORD = Password of the mysql user</li>
+        <li>DB_DATABASE = Name of the mysql database you created</li>
+      </ul>
+      <p>After that just import the "triangle.sql" file (you can find it in the project root folder")</p>
+      <h4>Mailing Server Setup</h4>
+      <p>In order to set-up the mail server you need to make an app <a href="https://mailgun.com/sessions/new">HERE</a> </p>
+      <ul>
+        <li>
+            MAILGUN_DOMAIN = The mailgun app domain
+        </li>
+        <li>
+            MAILGUN_SECRET = The secret mailgun api key
+        </li>
+      </ul>
+      <h3>Facebook, Twitter, LinkedIn APIs Keys</h3>
+      <h4>Facebook</h4>
+      <p>1.Go to <a target="_blank" href="https://developers.facebook.com/">FACEBOOK DEVELOPERS</a> and create a new application</p>
+      <img src="img/fb_devs.PNG" class="img-responsive img-thumbnail">
+      <p>2.When you create it the dashboard of your application will look like this</p>
+      <img src="img/fb_devs_dashboard.PNG" class="img-responsive img-thumbnail">
+      <p>3.Then copy the Facebook APP Id and Facebook App Secret And Paste It In the .env file (FACEBOOK_APP_ID,FACEBOOK_APP_SECRET)</p>
+      <p>4.Then go to Settings page in Facebook Developers (Shown above) and Enter your e-mail (Contact E-mail Section), the URL of your application (App Domains), and click Add Platform (Website) -> enter again the URL of your application</p>
+      <img src="img/fb_settings.PNG" class="img-responsive img-thumbnail">
+      <p>5. Go to App Review and make your application public, then go to "Items in review" and click "add items to this submission" -> make a submission for the following permissions -> 'manage_pages', 'user_events', 'publish_actions', 'user_managed_groups', 'publish_pages'</p>
+      <img src="img/fb_live.PNG" class="img-responsive img-thumbnail">
+      <h3>LinkedIn</h3>
+      <p>Go to <a target="_blank" href="https://developer.linkedin.com/">LinkedIn Developers Page</a> and create a new application</p>
+      <img src="img/new_app.PNG" class="img-responsive img-thumbnail">
+      <p>After that go to your application's page and check all Permissions checkboxes and add these 2 URL (your applicaiton URL + "/app/dashboard" and "/app/connect/linkedin"). For example - if your application domain is http://Trianglescript.com, you need to enter http://Trianglescript.com/app/dashboard, and http://Trianglescript.com/app/connect/linkedin below Authorized Redirect URLs (shown below): 
+</p>
+<img src="img/linkedin_dev.PNG">
+<p>Copy the Client ID and Client Secret and put it into your .env file (LINKEDIN_CLIENT_ID,LINKEDIN_CLIENT_SECRET)</p>
+<h3>Twitter</h3>
+<p>Go to <a target="_blank" href="https://apps.twitter.com/">Twitter Developers Page</a> and create a new application</p>
+      <img src="img/twitter_app.PNG" class="img-responsive img-thumbnail">
+      <p>On Callback URL ( Enter app url + "/connect/twitter")</p>
+      <p>After that copy (Consumer Key, Consumer Secret) and put it into your .env file (TWITTER_CLIENT_ID,TWITTER_CLIENT_SECRET)</p>
+      <img src="img/social.PNG">
+    </div>
+    <div id="cronjob">
+        <h3>SetUp Cronjob & Real-Time Sockets</h3>
+        <h3>Sockets</h3>
+        <p>You need to start the sockets using this command "php artisan sockets:start" in order to have all the real-time notifications working. And you need to put this running in the background.</p>
+        <h3>CronJob on linux</h3>
+        <p>Open the terminal and type <pre>crontab -e</pre> then add this line at the bottom (You need CURL package for this, you can install it by typing <code>sudo apt-get install curl</code>c) <pre>* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1</pre> </p>
+    </div>
+    <div id="guide">
+      <h3>Application Guide</h3>
+      <p>After you login you will be redirected to the dashboard</p>
+      <h4>Dashboard</h4>
+      <img src="img/Dashboard.PNG" class="img-responsive img-thumbnail">
+      <strong>Connected Profiles</strong>
+      <p>You can post / schedule your posts from the dashboard.</p>
+      <img src="img/scheduler.PNG" class="img-responsive img-thumbnail">
+      <strong>publish times</strong>
+      <p>publish times when the post will be scheduled when you click "Schedule in the future" and if this time is taken the post will be schedule for the next available one. On the picture above you can see the publish times for my Facebook profile (Monday 13:00, Tuesday 13:00, Wedne...) When I activate my FB profile and click "schedule in the future" if there is no post for Monday at 13:00, it will schedule it for Monday at 13:00 otherwise it will schedule it for Tuesday.</p>
+      <strong>Connect Profile</strong>
+      <img src="img/connect_profile.PNG" class="img-responsive img-thumbnail">
+      <strong>Team</strong>
+      <p>You can invite people to your team. You just need to enter their e-mail and send the request. If the user is registered, he/she will receive real-time notifications, if not an e-mail will be sent to him/her.</p>
+      <img src="img/team.PNG" class="img-responsive img-thumbnail">
+      <strong>Posts</strong>
+      <p>You can see your posts here, see comments, likes and answer to them, you can also delete the post</p>
+      <img src="img/posts.PNG" class="img-responsive img-thumbnail">
+    </div>
+    <div id="translations">
+      <h3>Translations</h3>
+      <p>You can access the translations on your_domain.com/admin/translations</p>
+      <h3>Adding a new language</h3>
+      <img src="img/before.PNG" class="img-responsive img-thumbnail">
+      <p>Go to <code>project_root/resources/lang</code> and copy the "English" folder and rename it. </p>
+      <img src="img/after.PNG" class="img-responsive img-thumbnail">
+      <p>Then go to the <code>Translations</code> section in the <code>ADMIN PANEL</code> and click <code>Import Groups</code> button.</p>
+      <img src="img/admin_trans.PNG" class="img-responsive img-thumbnail">
+      <h3>Translating </h3>
+      <p>Go to the <code>Translations</code> section in the <code>ADMIN PANEL</code> and Choose a group, then edit the translations you want and click Publish Translations</p>
+    </div>
+    <div id="admin_panel">
+      <h2>Admin Panel</h2>
+      You can access the admin panel at <code>http://your_domain.com/admin/login</code>
+      <h4>LOGIN CREDENTIALS</h4>
+      <strong>E-MAIL: triangle@admin.com</strong>
+      <strong>PASSWORD: $trianglepass$</strong>
+
+    </div>
+    <div id="contact_me" >
+      <h3>Contact Me</h3>
+      <ul>
+        <li>SKYPE: berkossa_ankossa</li>
+        <li>E-MAIL: imcodecanyon@gmail.com</li>
+      </ul>
+      <h3>FEEL FREE TO CONTACT ME AT ANYTIME</h3>
+    </div>
+
+    </div><!-- /.container -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

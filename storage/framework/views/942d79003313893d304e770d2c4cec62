@@ -1,0 +1,78 @@
+<?php $__env->startSection('title'); ?>
+    <?php echo trans('messages.users'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <div class="row">
+        <div class="col-sm-12">
+            <h4 class="page-title">Users </h4>
+        </div>
+    </div>
+    <a href="<?php echo url('admin/users/create'); ?>" class="btn btn-success"><?php echo trans('messages.add_new'); ?></a>
+    <table class="table table-hover table-striped table-border">
+        <thead>
+        <tr>
+            <th>E-mail</th>
+            <th><?php echo trans('messages.name'); ?></th>
+            <th><?php echo trans('messages.date_registered'); ?></th>
+            <th><?php echo trans('messages.options'); ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php $__empty_1 = true; foreach($users as $user): $__empty_1 = false; ?>
+            <tr>
+                <td><?php echo $user->email; ?> <?php echo $user->is_admin ? "[ADMIN]":""; ?></td>
+                <td><?php echo $user->name; ?></td>
+                <td><?php echo $user->created_at; ?></td>
+                <td>
+                    <div class="btn-group">
+                        <?php if($user->is_admin==0): ?>
+                            <a href="<?php echo url('admin/users/'.$user->id.'/edit'); ?>" class="btn btn-success btn-sm"><i
+                                        class="fa fa-edit"></i></a>
+                            <a href="#deleteModal<?php echo $user->id; ?>" class="btn btn-danger btn-sm" data-toggle="modal"><i
+                                        class="fa fa-times"></i></a>
+                        <?php endif; ?>
+                    </div>
+                </td>
+            </tr>
+        <?php endforeach; if ($__empty_1): ?>
+
+        <?php endif; ?>
+        </tbody>
+    </table>
+
+    <?php echo $users->render(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('js'); ?>
+    <?php foreach($users as $user): ?>
+        <?php if($user->is_admin == 0): ?>
+            <div class="modal fade" id="deleteModal<?php echo $user->id; ?>">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"><?php echo tr('are_you_sure'); ?></h4>
+                        </div>
+                        <div class="modal-body">
+                            <?php echo trans('messages.confirm_delete_user'); ?>?
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <?php echo Form::open(['url' => 'admin/users/'.$user->id, 'method' => 'DELETE', 'id' => 'delForm'.$user->id]); ?>
+
+                            <button type="button" class="btn btn-success"
+                                    data-dismiss="modal"><?php echo trans('messages.no'); ?></button>
+                            <button type="submit" class="btn btn-danger"><?php echo tr('yes'); ?></button>
+                            <?php echo Form::close(); ?>
+
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+        <?php endif; ?>
+    <?php endforeach; ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

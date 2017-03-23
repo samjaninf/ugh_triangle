@@ -1,0 +1,53 @@
+<?php $__env->startSection('title'); ?>
+    <?php echo tr('edit_user'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+    <div class="row">
+        <div class="col-sm-12">
+            <h4 class="page-title"><?php echo tr('edit_user'); ?> </h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div class="portlet">
+                <div class="portlet-heading bg-success">
+                    <h3 class="portlet-title">
+                        <?php echo tr('edit_user'); ?>
+
+                    </h3>
+
+                    <div class="portlet-widgets">
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div id="bg-success" class="panel-collapse collapse in">
+                    <?php echo Form::open(['url' => 'admin/users/'.$user->id,'method' => "PUT"]); ?>
+
+                    <div class="portlet-body">
+                        <strong><?php echo tr('name'); ?></strong>
+                        <input type="text" name="name" class="form-control" value="<?php echo $user->name; ?>">
+                        <strong>E-mail</strong>
+                        <input type="text" name="email" class="form-control" value="<?php echo $user->email; ?>">
+                        <strong><?php echo tr('password'); ?></strong>
+                        <input type="password" name="password" class="form-control"><br>
+                        <label>
+                            <input type="checkbox" name="is_admin" class="checkbox-primary" <?php echo $user->is_admin ? "checked='checked'":""; ?>>
+                            <?php echo tr('is_admin'); ?>
+
+                        </label>
+                    </div>
+                    <div class="portlet-footer text-center">
+                        <button type="submit" class="btn btn-primary"><?php echo tr('update'); ?></button>
+                    </div>
+                    <?php echo Form::close(); ?>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('admin.layout.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
