@@ -52,6 +52,7 @@ COPY entrypoint.sh /entrypoint.sh
 COPY triangle.crontab /etc/cron.d/triangle
 RUN chown -R www-data:www-data /var/www/html
 RUN chmod 755 -R /var/www/html
+RUN chmod 777 /entrypoint.sh
 #WORKDIR /var/www/html
 EXPOSE 80
 ENTRYPOINT ["/entrypoint.sh"]
